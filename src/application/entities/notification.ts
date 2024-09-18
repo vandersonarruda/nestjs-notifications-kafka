@@ -51,6 +51,14 @@ export class Notification {
     return this.props.createdAt;
   }
 
+  public read() {
+    this.props.readAt = new Date();
+  }
+
+  public unread() {
+    this.props.readAt = null;
+  }
+
   public cancel() {
     this.props.canceledAt = new Date();
   }
@@ -65,9 +73,5 @@ export class Notification {
 
   public set category(category: string) {
     this.props.category = category;
-  }
-
-  public set readAt(readAt: Date | null | undefined) {
-    this.props.readAt = readAt;
   }
 }
