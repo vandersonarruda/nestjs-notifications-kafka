@@ -1,11 +1,41 @@
-version: '3.7'
-
 services:
-  pg:
+  postgres:
     image: bitnami/postgresql:latest
+    hostname: postgres
+    container_name: postgres
     ports:
       - 5432:5432
     environment:
       - POSTGRES_USER=docker
       - POSTGRES_PASSWORD=docker
       - POSTGRES_DB=notifications-service
+    volumes:
+      - ./postgresql-data:/bitnami
+  
+  zookeeper:
+    image: bitnami/zookeeper:latest
+    hostname: zookeeper
+    container_name: zookeeper
+    ports:
+      - 2181:2181
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
+    volumes:
+      - ./zookeeper-data:/bitnami
+
+  kafka:
+    image: bitnami/kafka:latest
+    hostname: kafka
+    container_name: kafka
+    ports:
+      - 9092:9092
+    environment:
+      - KAFKA_BROKER_ID=1
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
+      - KAFKA_LISTENERS=PLAINTEXT://:9092
+      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9092
+      - ALLOW_PLAINTEXT_LISTENER=yes
+    depends_on:
+      - zookeeper
+    volumes:
+      - ./kafka-data:/bitnami/kafka/data
