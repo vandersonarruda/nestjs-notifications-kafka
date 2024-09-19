@@ -9,8 +9,8 @@ export class KafkaConsumerService
   constructor() {
     super({
       client: {
+        clientId: 'notifications-service',
         brokers: ['localhost:9092'],
-        clientId: 'notifications',
       },
     });
   }
