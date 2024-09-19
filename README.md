@@ -59,6 +59,20 @@ npx prisma migrate deploy
 
 With all services running, the microservice is ready to handle notifications. Interact with it through your application or via Kafka messages, depending on your setup.
 
+### Simulating Message Production
+
+In the root directory, there's a folder named ```_producer-send-message``` containing a simple Node.js application. This app simulates a Kafka producer sending messages to the topic, which is useful for testing and development purposes. 
+
+Running the Producer Simulator
+
+```bash
+cd _producer-send-message
+npm install
+node producer.js
+```
+
+This script will send sample messages to the Kafka topic, allowing you to observe how the microservice consumes and processes these messages.
+
 ## Testing
 
 Run the test suite using:
