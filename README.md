@@ -34,7 +34,13 @@ docker-compose up -d
 Execute the following command to create the necessary Kafka topic:
 
 ```bash
-docker-compose exec kafka bash /docker-entrypoint-init.d/create-topics.sh
+docker exec -it kafka kafka-topics.sh \
+  --create \
+  --topic notifications.send-notification \
+  --bootstrap-server localhost:9092 \
+  --replication-factor 1 \
+  --partitions 1 \
+  --config retention.ms=604800000
 ```
 
 ### Verify Kafka Topic Creation
@@ -52,7 +58,7 @@ You should see your topic listed in the output.
 Apply database migrations using Prisma:
 
 ```bash
-npx prisma migrate deploy
+npx prisma db push
 ```
 
 ## Usage
